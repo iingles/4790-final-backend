@@ -9,7 +9,7 @@ import { User } from '../models/User'
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-rxesh.mongodb.net/${process.env.MONGO_DEFAULT_DB}`
+const MONGODB_URI = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${MONGODB_IP}/${process.env.MONGO_DEFAULT_DB}`
 
 console.log(MONGODB_URI)
 

@@ -78,5 +78,6 @@ export const typeDefs = gql`
 
     type Subscription {
         newPost: Post!
+        updatePost: Post!
     }
 `

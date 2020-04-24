@@ -12,6 +12,7 @@ import { createTokens } from '../middleware/auth'
 
 // Emitted string for subscriptions
 const NEW_POST = "NEW POST"
+const UPDATED_POST = "UPDATED POST"
 
 // functions take 3 parameters: parent object, arguements, and context
 
@@ -122,6 +123,7 @@ export const resolvers = {
         },
 
         updateUser: async (_, {userInput}, req) => {
+        
             if (!req.userId) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -168,11 +170,11 @@ export const resolvers = {
         updateFollows: async (_, { id, followInput }, req) => {
             // Error checking
 
-            if (!req.userId) {
-                const error = new Error('Not Authenticated')
-                error.code = 401
-                throw error
-            }
+            // if (!req.userId) {
+            //     const error = new Error('Not Authenticated')
+            //     error.code = 401
+            //     throw error
+            // }
 
             const user = await User.findById(id)
             const user2 = await User.findById(followInput._id)
@@ -321,11 +323,11 @@ export const resolvers = {
         },
 
         updatePost: async (_, { id, postInput }, req) => {
-            if (!req.userId) {
-                const error = new Error('Not Authenticated')
-                error.code = 401
-                throw error
-            }
+            // if (!req.userId) {
+            //     const error = new Error('Not Authenticated')
+            //     error.code = 401
+            //     throw error
+            // }
 
             const userId = postInput.creatorId
 
@@ -363,6 +365,13 @@ export const resolvers = {
             }
 
             const updatedPost = await post.save()
+
+            // This should fire whenever a post is updated
+            // Whenever we want the subscribe event triggered, call pubsub.publish.  
+            // Two parameters for publish: <trigger name>, <payload>
+            pubsub.publish(UPDATED_POST, {
+                updatePost: updatedPost
+            })
 
             return {
                 ...updatedPost._doc,
@@ -405,6 +414,9 @@ export const resolvers = {
     Subscription: {        
         newPost: {
             subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(NEW_POST) 
+        },
+        updatePost: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(UPDATED_POST)
         }
     }
 }
