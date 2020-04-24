@@ -322,12 +322,14 @@ export const resolvers = {
             }
         },
 
-        updatePost: async (_, { id, postInput }, req) => {
-            // if (!req.userId) {
-            //     const error = new Error('Not Authenticated')
-            //     error.code = 401
-            //     throw error
-            // }
+        updatePost: async (_, { id, postInput }, { pubsub, req }) => {
+
+
+            if (!req.userId) {
+                const error = new Error('Not Authenticated')
+                error.code = 401
+                throw error
+            }
 
             const userId = postInput.creatorId
 
@@ -381,7 +383,7 @@ export const resolvers = {
             }
         },
 
-        deleteOnePost: async (_, { id }, req) => {
+        deleteOnePost: async (_, { id }, { req }) => {
             if (!req.userId) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
