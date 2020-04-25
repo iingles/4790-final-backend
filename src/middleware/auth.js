@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 export const createTokens = (user) => {
-    const accessToken = sign({
+    const accessToken = jwt.sign({
         userId: user._id.toString(),
         email: user.email
     },
@@ -12,7 +12,7 @@ export const createTokens = (user) => {
     }
     )
 
-    const refreshToken = sign({
+    const refreshToken = jwt.sign({
         userId: user._id.toString(),
         email: user.email
     },

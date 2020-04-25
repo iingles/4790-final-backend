@@ -25,7 +25,8 @@ export const typeDefs = gql`
         followers: [User!]
         following: [User!]
         birthday: String
-        status: String 
+        status: String
+        backgroundImageUrl: String
     }
 
     type AuthData {
