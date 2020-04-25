@@ -4,8 +4,10 @@ export const typeDefs = gql`
     type Post {
         _id: ID!
         content: String!
-        imageUrl: String
+        media: String!
         creator: User!
+        replies: [Post!]!
+        likes: [User!]!
         createdAt: String!
         updatedAt: String!
     }    

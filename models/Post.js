@@ -3,10 +3,6 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const postSchema = new Schema({
-    imgURL: {
-        type: String,
-        required: false
-    },
     content: {
         type: String,
         required: true
@@ -20,21 +16,20 @@ const postSchema = new Schema({
         ref: 'User',
         required: true
     },
-    likes: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: false
-    },
-    rePosts: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: false
-    },
-    thread: {
-        type: Schema.Types.ObjectId,
-        ref: 'Post',
-        required: false
-    }
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: false
+        }
+    ],
+    replies: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Post',
+            required: false
+        }
+    ]
     //Pass an object as a second argument to the Schema constructor
 }, {
     timestamps: true

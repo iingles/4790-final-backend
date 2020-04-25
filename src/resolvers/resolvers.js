@@ -298,8 +298,9 @@ export const resolvers = {
             // If we have an authenticated user and valid input, create a new post
             const post = new Post({
                 content: postInput.content,
-                // imageURL: postInput.imageURL,
-                creator: user
+                imageURL: postInput.imageURL,
+                creator: user,
+                posts: []
             })
 
             const createdPost = await post.save()
@@ -383,7 +384,7 @@ export const resolvers = {
             }
         },
 
-        deleteOnePost: async (_, { id }, { req }) => {
+        deleteOnePost: async (_, { id }, { req, pubsub }) => {
             if (!req.userId) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -414,7 +415,7 @@ export const resolvers = {
             // Whenever we want the subscribe event triggered, call pubsub.publish.  
             // Two parameters for publish: <trigger name>, <payload>
             pubsub.publish(DELETED_POST, {
-                postId: post._id
+                postId: id
             })
 
             return true
