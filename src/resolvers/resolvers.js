@@ -298,9 +298,10 @@ export const resolvers = {
             // If we have an authenticated user and valid input, create a new post
             const post = new Post({
                 content: postInput.content,
-                imageURL: postInput.imageURL,
+                media: '',
                 creator: user,
-                posts: []
+                replies: [],
+                likes: []
             })
 
             const createdPost = await post.save()
@@ -363,9 +364,6 @@ export const resolvers = {
             }
 
             post.content = postInput.content
-            if (postInput.imageUrl !== 'undefined') {
-                post.imageUrl = postInput.imageUrl
-            }
 
             const updatedPost = await post.save()
 
@@ -385,6 +383,7 @@ export const resolvers = {
         },
 
         deleteOnePost: async (_, { id }, { req, pubsub }) => {
+
             if (!req.userId) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -408,14 +407,16 @@ export const resolvers = {
             await Post.findByIdAndRemove(id, { useFindAndModify: false })
             // Remove the post from the user's post list
             const user = await User.findById(req.userId)
-            user.posts.pull(id)
+            
+            user.posts.splice(user.posts.indexOf(id), 1)
+
             await user.save()
 
             // This should fire whenever a post is deleted
             // Whenever we want the subscribe event triggered, call pubsub.publish.  
             // Two parameters for publish: <trigger name>, <payload>
             pubsub.publish(DELETED_POST, {
-                postId: id
+                id: id
             })
 
             return true

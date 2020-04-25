@@ -60,6 +60,12 @@ export const typeDefs = gql`
     input PostInputData {
         content: String!
         creatorId: String!
+        media: String
+    }
+
+    input likeData {
+        _id: ID!
+        action: String!
     }
 
     type Query {        
@@ -75,12 +81,12 @@ export const typeDefs = gql`
         updateFollows(id: ID!, followInput: followData): User!
         updateUser(id: ID!, userInput: UserInputData): User!
         updatePost(id: ID!, postInput: PostInputData): Post!
-        deleteOnePost(id: ID!): Boolean        
+        deleteOnePost(id: String!): String!
     }
 
     type Subscription {
         newPost: Post!
         updatePost: Post!
-        deletedPost: Post
+        deletedPost: String!
     }
 `
