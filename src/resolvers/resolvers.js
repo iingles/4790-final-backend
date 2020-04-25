@@ -26,11 +26,11 @@ export const resolvers = {
 
         posts: async (_, { page }, { req }) => {
 
-            // if (!req.userId) {
-            //     const error = new Error('Not Authenticated')
-            //     error.code = 401
-            //     throw error
-            // }
+            if (!req.isAuth) {
+                const error = new Error('Not Authenticated')
+                error.code = 401
+                throw error
+            }
 
             // Pagination
 
@@ -125,7 +125,7 @@ export const resolvers = {
 
         updateUser: async (_, {userInput}, req) => {
         
-            if (!req.userId) {
+            if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error
@@ -168,10 +168,44 @@ export const resolvers = {
             }
         },
 
-        updateFollows: async (_, { id, followInput }, {req}) => {
-            // Error checking
+        editProfile: async (_, { userInput }, { req, pubsub }) => {
 
-            if (!req.userId) {
+            if (!req.isAuth) {
+                const error = new Error('Not Authenticated')
+                error.code = 401
+                throw error
+            }
+            
+            const id = userInput.id
+
+            const user = await User.findById(id)
+
+            if (!user) {
+                const error = new Error('Unable to find user')
+                error.code = 404
+                throw error
+            }
+
+            user.firstName = userInput.firstName
+            user.lastName = userInput.lastName
+            user.bio = userInput.bio
+            user.status = userInput.status
+
+            await user.save()
+
+            return {
+                id: user._id,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                bio: user.bio,
+                status: user.status
+            }
+        },
+
+        updateFollows: async (_, { id, followInput }, { req, pubsub }) => {
+
+            if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error
@@ -268,7 +302,7 @@ export const resolvers = {
 
             const creatorId = postInput.creatorId
 
-            if (!req.userId) {
+            if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error
@@ -327,7 +361,7 @@ export const resolvers = {
 
         updatePost: async (_, { id, postInput }, { pubsub, req }) => {
 
-            if (!req.userId) {
+            if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error
@@ -384,7 +418,7 @@ export const resolvers = {
 
         deleteOnePost: async (_, { id }, { req, pubsub }) => {
 
-            if (!req.userId) {
+            if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error

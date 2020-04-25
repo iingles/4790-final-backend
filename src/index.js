@@ -14,7 +14,10 @@ import { typeDefs } from './schema/schema'
 import { resolvers } from './resolvers/resolvers'
 
 import { User } from '../models/User'
-import { createTokens, auth } from './middleware/auth'
+// import { createTokens, auth } from './middleware/auth'
+import { auth } from './middleware/auth'
+
+require('dotenv').config()
 
 // Utitlity constants
 const MONGODB_URI = process.env.MONGODB_URI
@@ -54,17 +57,6 @@ const startServer = async () => {
         subscriptions: {
             onConnect: (connectionParams, ws, ctx) => {
                 // console.log('connect')
-                // if (connectionParams.authToken) {
-                //     return validateToken(connectionParams.authToken)
-                //         .then(findUser(connectionParams.authToken))
-                //         .then(user => {
-                //             return {
-                //                 currentUser: user,
-                //             };
-                //         });
-                // }
-
-                // throw new Error('Missing auth token!');
             },
             
             onDisconnect: (ws, ctx) => {
@@ -74,7 +66,7 @@ const startServer = async () => {
     })
 
     // Authentication using cookies
-    app.use(cookieParser())
+    // app.use(cookieParser())
     
     app.use((req, res, next) => {
         if (req.method === 'OPTION') {
@@ -87,62 +79,62 @@ const startServer = async () => {
     app.use(bodyParser.json());
     app.use(auth)
     
-    app.use(async (req, res, next) => {
-        // accessToken should have been set at login
-        const accessToken = req.cookies["accessToken"]
-        const refreshToken = req.cookies["refreshToken"]
+    // app.use(async (req, res, next) => {
+    //     // accessToken should have been set at login
+    //     const accessToken = req.cookies["accessToken"]
+    //     const refreshToken = req.cookies["refreshToken"]
 
-        // Check to see if we got tokens from the cookies
+    //     // Check to see if we got tokens from the cookies
 
-        if (!refreshToken && !accessToken) {
-            return next()
-        }
+    //     if (!refreshToken && !accessToken) {
+    //         return next()
+    //     }
 
-        try {
+    //     try {
            
-            // Make sure that the cookie matches the secret
-            const data = verify(accessToken, ACCESS_TOKEN_SECRET)
-            // If there is a userId on the request, we know that the token has been verified
-            req.userId = data.userId
-            return next()
-        } catch { }
+    //         // Make sure that the cookie matches the secret
+    //         const data = verify(accessToken, ACCESS_TOKEN_SECRET)
+    //         // If there is a userId on the request, we know that the token has been verified
+    //         req.userId = data.userId
+    //         return next()
+    //     } catch { }
 
-        if (!refreshToken) {
+    //     if (!refreshToken) {
             
-            return next()
-        }
+    //         return next()
+    //     }
         
-        let data
+    //     let data
 
-        // If there is a refresh token, verify it
-        try {
-            // Make sure that the cookie matches the secret
-            data = verify(refreshToken, ACCESS_TOKEN_SECRET)
-            // If there is a userId on the request, we know that the token has been verified
-        } catch {
-            return next()
-        }
+    //     // If there is a refresh token, verify it
+    //     try {
+    //         // Make sure that the cookie matches the secret
+    //         data = verify(refreshToken, ACCESS_TOKEN_SECRET)
+    //         // If there is a userId on the request, we know that the token has been verified
+    //     } catch {
+    //         return next()
+    //     }
 
-        const user = await User.findById(data.userId)
+    //     const user = await User.findById(data.userId)
 
-        const tokens = createTokens(user) 
+    //     const tokens = createTokens(user) 
 
-        res.cookie('refreshToken', tokens.refreshToken, {
-            expire: 60 * 60 * 24 * 7,
-            httpOnly: true,
-            // secure: true
-        })
+    //     res.cookie('refreshToken', tokens.refreshToken, {
+    //         expire: 60 * 60 * 24 * 7,
+    //         httpOnly: true,
+    //         // secure: true
+    //     })
 
-        res.cookie('accessToken', tokens.accessToken, {
-            expire: 60 * 15,
-            httpOnly: true,
-            // secure: true
-        })
+    //     res.cookie('accessToken', tokens.accessToken, {
+    //         expire: 60 * 15,
+    //         httpOnly: true,
+    //         // secure: true
+    //     })
 
-        req.userId = user._id
+    //     req.userId = user._id
 
-        next()
-    })
+        // next()
+    // })
     
     const corsOptions = {
         origin: 'http://localhost:8080',

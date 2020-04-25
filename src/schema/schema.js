@@ -22,8 +22,8 @@ export const typeDefs = gql`
         photoSm: String
         photoLg: String
         bio: String
-        followers: [User!]!
-        following: [User!]!
+        followers: [User!]
+        following: [User!]
         birthday: String
         status: String 
     }
@@ -40,10 +40,11 @@ export const typeDefs = gql`
     }
 
     input UserInputData {
+        id: ID!
         email: String!
         firstName: String!
         lastName: String!
-        password: String!
+        password: String
         photoSm: String
         photoLg: String
         backgroundImageUrl: String
@@ -78,6 +79,7 @@ export const typeDefs = gql`
         login(email: String!, password: String!): AuthData!
         createUser(userInput: UserInputData): User!
         createPost(postInput: PostInputData): Post!
+        editProfile(userInput: UserInputData): User!
         updateFollows(id: ID!, followInput: followData): User!
         updateUser(id: ID!, userInput: UserInputData): User!
         updatePost(id: ID!, postInput: PostInputData): Post!
