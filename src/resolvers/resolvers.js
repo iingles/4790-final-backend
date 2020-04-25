@@ -10,10 +10,11 @@ import { Post } from '../../models/Post'
 // Tokens
 import { createTokens } from '../middleware/auth'
 
-// Emitted string for subscriptions
+// Emitted strings for subscriptions
 const NEW_POST = "NEW POST"
 const UPDATED_POST = "UPDATED POST"
 const DELETED_POST = "DELETED POST"
+const FOLLOWS_UPDATED = "FOLLOWS UPDATED"
 
 // functions take 3 parameters: parent object, arguements, and context
 
@@ -236,10 +237,17 @@ export const resolvers = {
                     await user.save()
                     await user2.save()
                 } else {
-                    console.log(`already following ${user2.firstName}`)
+                    const error = new Error(`already following ${user2.firstName}`)
+                    error.code = 409
+                    throw error
                 }
+                
+                pubsub.publish(FOLLOWS_UPDATED, {
+                    following: user.following
+                })
 
                 return {
+                    
                     following: user.following
                 }
             }
@@ -252,6 +260,11 @@ export const resolvers = {
                 await user.save()
                 await user2.save()
                 console.log('Successfully removed user.')
+
+                pubsub.publish(FOLLOWS_UPDATED, {
+                    following: user.following
+                })
+
                 return {
                     following: user.following
                 }
@@ -466,6 +479,9 @@ export const resolvers = {
         },
         deletedPost: {
             subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(DELETED_POST)
+        },
+        followsUpdated: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(FOLLOWS_UPDATED)
         }
     }
 }

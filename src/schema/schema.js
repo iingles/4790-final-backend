@@ -90,5 +90,6 @@ export const typeDefs = gql`
         newPost: Post!
         updatePost: Post!
         deletedPost: String!
+        followsUpdated: User!
     }
 `
