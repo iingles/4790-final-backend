@@ -13,6 +13,7 @@ import { createTokens } from '../middleware/auth'
 // Emitted string for subscriptions
 const NEW_POST = "NEW POST"
 const UPDATED_POST = "UPDATED POST"
+const DELETED_POST = "DELETED POST"
 
 // functions take 3 parameters: parent object, arguements, and context
 
@@ -167,14 +168,14 @@ export const resolvers = {
             }
         },
 
-        updateFollows: async (_, { id, followInput }, req) => {
+        updateFollows: async (_, { id, followInput }, {req}) => {
             // Error checking
 
-            // if (!req.userId) {
-            //     const error = new Error('Not Authenticated')
-            //     error.code = 401
-            //     throw error
-            // }
+            if (!req.userId) {
+                const error = new Error('Not Authenticated')
+                error.code = 401
+                throw error
+            }
 
             const user = await User.findById(id)
             const user2 = await User.findById(followInput._id)
@@ -324,7 +325,6 @@ export const resolvers = {
 
         updatePost: async (_, { id, postInput }, { pubsub, req }) => {
 
-
             if (!req.userId) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -409,6 +409,14 @@ export const resolvers = {
             const user = await User.findById(req.userId)
             user.posts.pull(id)
             await user.save()
+
+            // This should fire whenever a post is deleted
+            // Whenever we want the subscribe event triggered, call pubsub.publish.  
+            // Two parameters for publish: <trigger name>, <payload>
+            pubsub.publish(DELETED_POST, {
+                postId: post._id
+            })
+
             return true
         }
     },
@@ -419,6 +427,9 @@ export const resolvers = {
         },
         updatePost: {
             subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(UPDATED_POST)
+        },
+        deletedPost: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(DELETED_POST)
         }
     }
 }
