@@ -19,11 +19,13 @@ import { auth } from './middleware/auth'
 
 require('dotenv').config()
 
+
+
 // Utitlity constants
 const MONGODB_URI = process.env.MONGODB_URI
-const PORT = process.env.port || 4000
+const PORT = process.env.PORT || 4000
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
-
+console.log(MONGODB_URI)
 
 // For subscriptions
 const pubsub = new PubSub()
