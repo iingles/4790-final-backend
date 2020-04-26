@@ -137,7 +137,7 @@ const startServer = async () => {
     // })
     
     const corsOptions = {
-        origin: 'http://206.189.215.72/',
+        origin: 'http://206.189.215.72',
         credentials: true, // <-- REQUIRED backend setting
     }
 
