@@ -170,7 +170,7 @@ export const resolvers = {
         },
 
         editProfile: async (_, { userInput }, { req, pubsub }) => {
-
+            console.log("Attempting to edit profile...")
             if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -193,7 +193,7 @@ export const resolvers = {
             user.status = userInput.status
 
             await user.save()
-
+            console.log("Successfully edited profile!")
             return {
                 id: user._id,
                 email: user.email,
@@ -205,7 +205,7 @@ export const resolvers = {
         },
 
         updateFollows: async (_, { id, followInput }, { req, pubsub }) => {
-
+            console.log('updating follows...')
             if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -246,6 +246,7 @@ export const resolvers = {
                     following: user.following
                 })
 
+                console.log("Successfully updated follows!")
                 return {
                     
                     following: user.following
