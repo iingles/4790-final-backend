@@ -1,0 +1,77 @@
+
+
+
+
+
+
+
+
+
+# Isaac's Twitter Clone
+#### Final Project for DGM 4790, Spring 2020
+
+(http://206.189.215.72/)[My_Twitter_Clone_Frontend] is hosted live on DigitalOcean.
+---
+
+## Project Requirements
+1. Effectively use conditional logic, JavaScript array methods, and front-end framework elements to render large lists on the web client.
+
+1. Work with the proper tools (e.g. VueJS, React) to create and manage the front-end portion of your project within a real development toolset.
+    - [x] Front End Repository is located (https://github.com/iingles/4790-final-frontend)[here]
+
+1. Work with NPM and NodeJS to create and manage the back-end portion of your project.
+    - [x] Project was built with Node, Express, Apollo Server, and various other NPM packages.  See (https://github.com/iingles/4790-final-backend/blob/master/package.json)[package.json] for a list of NPM dependencies.
+1. "Seed" script provides way to populate the datastore after the Docker install and launch.
+    - [x] Seed script is written to seed a MongoDB instance and is located (https://github.com/iingles/4790-final-backend/blob/master/data/seed.js)[here], and can be run with 
+    
+    `npm run seed`  
+    
+    **Be sure to update the connection string in the script if you intend on running it on your own instance of MongoDB.**
+
+1. Properly use Git for your source version control with an established record of at least 4 days of commits each week from February 19th through April 27th.
+    - [x] See my (https://github.com/iingles)[Github_Profile]
+
+1. Present a User Interface route or "page" that allows the user to: 
+    1. CREATE a meaningful (at least 5 data fields) resource through a REST endpoint that is stored in the datastore
+    1. Read or GET meaningful data from 3 different REST endpoints
+    1. UPDATE at least 1 portion of meaningful data through the appropriate endpoint
+    1. DELETE some resource via the proper endpoint
+
+1. Present a separate User Interface route or "page" that allows the user to:
+    1. CREATE a meaningful (at least 5 data fields) resource through a GraphQL endpoint that is stored in the datastore
+        - [x] A user may be signed up on the (http://206.189.215.72/signup)[/signup] page.
+
+    2. Read or GET meaningful data from with at least 3 different query options from the GraphQL endpoint.
+        - [x] A user may login on the (http://206.189.215.72/signup)[/login] page. *Demo users have been provided*
+        - [x] Posts are loaded in the **Home** view with the Vue `created()` hook.
+        - [x] User data is loaded into each individual post as it is rendered.
+        - [x] User data is loaded in the **Profile** view with the Vue `created()` hook. 
+
+    3. UPDATE at least 1 portion of meaningful data through an appropriate GraphQL mutation.
+        
+        - [x] Once logged in, a user may edit their profile by clicking on the **profile** link in the main nav menu.
+        - [x] Once logged in, a user may edit any posts that *they* have created by clicking on the top right menu of the individual post.
+
+        ### I have not gotten the following two items to update in real time, and they require a page reload to see the results:
+
+        - [x] A user may "follow" or "unfollow" other users by clicking on the "follow/unfollow" button on the user's profile.
+        - [x] A user may "like" a post by clicking on the heart icon.
+
+    1. DELETE some resource using a proper GraphQL mutation.
+        - [x] Once logged in, a user may delete a post that *they* have created by clicking on the top right menu of the individual post.
+
+    1. You will submit the GitHub URL for your project with a detailed ReadMe explaining how to install and run your server(s) on Docker
+
+        - [x] My MongoDB database is running in a Docker container on DigitalOcean.  
+
+
+
+    ## Additional Information:    
+   
+    - [x] The backend GraphQL playground may be reached (http://206.189.215.72:4000/graphql)[here], although the app requires authentication so you won't (or at least shouldn't) be able to do much.
+    - [x] GraphQL resolvers for CRUD operations are (https://github.com/iingles/4790-final-backend/blob/master/src/resolvers/resolvers.js)[here]
+    - [x] GraphQL Schema is (https://github.com/iingles/4790-final-backend/blob/master/src/schema/schema.js)[here]
+
+        
+ 
+
