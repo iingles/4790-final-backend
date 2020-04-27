@@ -10,26 +10,26 @@
 # Isaac's Twitter Clone
 #### Final Project for DGM 4790, Spring 2020
 
-(http://206.189.215.72/)[My_Twitter_Clone_Frontend] is hosted live on DigitalOcean.
+[My Twitter Clone](http://206.189.215.72/) is hosted live on DigitalOcean.
 ---
 
 ## Project Requirements
 1. Effectively use conditional logic, JavaScript array methods, and front-end framework elements to render large lists on the web client.
 
 1. Work with the proper tools (e.g. VueJS, React) to create and manage the front-end portion of your project within a real development toolset.
-    - [x] Front End Repository is located (https://github.com/iingles/4790-final-frontend)[here]
+    - [x] Front End Repository is located [here](https://github.com/iingles/4790-final-frontend)
 
 1. Work with NPM and NodeJS to create and manage the back-end portion of your project.
-    - [x] Project was built with Node, Express, Apollo Server, and various other NPM packages.  See (https://github.com/iingles/4790-final-backend/blob/master/package.json)[package.json] for a list of NPM dependencies.
+    - [x] Project was built with Node, Express, Apollo Server, and various other NPM packages.  See [package.json](https://github.com/iingles/4790-final-backend/blob/master/package.json) for a list of NPM dependencies.
 1. "Seed" script provides way to populate the datastore after the Docker install and launch.
-    - [x] Seed script is written to seed a MongoDB instance and is located (https://github.com/iingles/4790-final-backend/blob/master/data/seed.js)[here], and can be run with 
+    - [x] Seed script is written to seed a MongoDB instance and is located [here](https://github.com/iingles/4790-final-backend/blob/master/data/seed.js), and can be run with 
     
     `npm run seed`  
     
     **Be sure to update the connection string in the script if you intend on running it on your own instance of MongoDB.**
 
 1. Properly use Git for your source version control with an established record of at least 4 days of commits each week from February 19th through April 27th.
-    - [x] See my (https://github.com/iingles)[Github_Profile]
+    - [x] See my [Github Profile](https://github.com/iingles)
 
 1. Present a User Interface route or "page" that allows the user to: 
     1. CREATE a meaningful (at least 5 data fields) resource through a REST endpoint that is stored in the datastore
@@ -39,10 +39,10 @@
 
 1. Present a separate User Interface route or "page" that allows the user to:
     1. CREATE a meaningful (at least 5 data fields) resource through a GraphQL endpoint that is stored in the datastore
-        - [x] A user may be signed up on the (http://206.189.215.72/signup)[/signup] page.
+        - [x] A user may be signed up on the [/signup](http://206.189.215.72/signup) page.
 
     2. Read or GET meaningful data from with at least 3 different query options from the GraphQL endpoint.
-        - [x] A user may login on the (http://206.189.215.72/signup)[/login] page. *Demo users have been provided*
+        - [x] A user may login on the [/login](http://206.189.215.72/login) page. *Demo users have been provided*
         - [x] Posts are loaded in the **Home** view with the Vue `created()` hook.
         - [x] User data is loaded into each individual post as it is rendered.
         - [x] User data is loaded in the **Profile** view with the Vue `created()` hook. 
@@ -67,10 +67,11 @@
 
 
     ## Additional Information:    
+
    
-    - [x] The backend GraphQL playground may be reached (http://206.189.215.72:4000/graphql)[here], although the app requires authentication so you won't (or at least shouldn't) be able to do much.
-    - [x] GraphQL resolvers for CRUD operations are (https://github.com/iingles/4790-final-backend/blob/master/src/resolvers/resolvers.js)[here]
-    - [x] GraphQL Schema is (https://github.com/iingles/4790-final-backend/blob/master/src/schema/schema.js)[here]
+    - [x] The backend GraphQL playground may be reached [here](http://206.189.215.72:4000/graphql), although the app requires authentication so you won't (or at least shouldn't) be able to do much.
+    - [x] GraphQL resolvers for CRUD operations are [here](https://github.com/iingles/4790-final-backend/blob/master/src/resolvers/resolvers.js)
+    - [x] GraphQL Schema is [here](https://github.com/iingles/4790-final-backend/blob/master/src/schema/schema.js)
 
         
  
