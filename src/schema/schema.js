@@ -41,7 +41,7 @@ export const typeDefs = gql`
     }
 
     input UserInputData {
-        id: ID!
+        id: ID
         email: String!
         firstName: String!
         lastName: String!

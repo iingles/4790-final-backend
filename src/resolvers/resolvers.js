@@ -70,6 +70,8 @@ export const resolvers = {
             // Make a stack of errors
             const errors = []
 
+            console.log('hit')
+
             if (!validator.isEmail(userInput.email)) {
                 errors.push({
                     message: 'Email is invalid.'

@@ -37,7 +37,7 @@ const startServer = async () => {
 
     const validateToken = authToken => {
         // ... validate token and return a Promise, rejects in case of an error
-        
+
     };
 
     const findUser = authToken => {
@@ -59,7 +59,7 @@ const startServer = async () => {
             onConnect: (connectionParams, ws, ctx) => {
                 // console.log('connect')
             },
-            
+
             onDisconnect: (ws, ctx) => {
                 // console.log('disconnect')
             }
@@ -68,7 +68,7 @@ const startServer = async () => {
 
     // Authentication using cookies
     // app.use(cookieParser())
-    
+
     app.use((req, res, next) => {
         if (req.method === 'OPTION') {
             res.sendStatus(200)
@@ -79,7 +79,7 @@ const startServer = async () => {
     //application/json
     app.use(bodyParser.json());
     app.use(auth)
-    
+
     // app.use(async (req, res, next) => {
     //     // accessToken should have been set at login
     //     const accessToken = req.cookies["accessToken"]
@@ -92,7 +92,7 @@ const startServer = async () => {
     //     }
 
     //     try {
-           
+
     //         // Make sure that the cookie matches the secret
     //         const data = verify(accessToken, ACCESS_TOKEN_SECRET)
     //         // If there is a userId on the request, we know that the token has been verified
@@ -101,10 +101,10 @@ const startServer = async () => {
     //     } catch { }
 
     //     if (!refreshToken) {
-            
+
     //         return next()
     //     }
-        
+
     //     let data
 
     //     // If there is a refresh token, verify it
@@ -134,16 +134,16 @@ const startServer = async () => {
 
     //     req.userId = user._id
 
-        // next()
+    // next()
     // })
-    
+
     const corsOptions = {
         origin: 'http://206.189.215.72',
         credentials: true, // <-- REQUIRED backend setting
     }
 
     const httpServer = http.createServer(app)
-    
+
     server.applyMiddleware({ app, cors: corsOptions }) // app is from existing express app
     server.installSubscriptionHandlers(httpServer);
 
@@ -156,13 +156,13 @@ const startServer = async () => {
         .catch(err => {
             console.log(err)
         })
-    
+
     httpServer.listen(PORT, () => {
         console.log(`Server listening at port http://localhost:${PORT}/graphql`)
         console.log(`Subscriptions ready at ws://localhost:${PORT}${server.subscriptionsPath} `)
     })
-    
-   
+
+
 }
 
 startServer()
