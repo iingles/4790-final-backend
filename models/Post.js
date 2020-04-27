@@ -19,15 +19,13 @@ const postSchema = new Schema({
     likes: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: false
+            ref: 'User'
         }
     ],
     replies: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Post',
-            required: false
+            ref: 'Post'
         }
     ]
     //Pass an object as a second argument to the Schema constructor

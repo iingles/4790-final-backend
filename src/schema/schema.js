@@ -25,6 +25,7 @@ export const typeDefs = gql`
         followers: [User!]
         following: [User!]
         birthday: String
+        likes: [Post!]!
         status: String
         backgroundImageUrl: String
     }
@@ -66,7 +67,7 @@ export const typeDefs = gql`
     }
 
     input likeData {
-        _id: ID!
+        userId: ID!
         action: String!
     }
 
@@ -82,6 +83,7 @@ export const typeDefs = gql`
         createPost(postInput: PostInputData): Post!
         editProfile(userInput: UserInputData): User!
         updateFollows(id: ID!, followInput: followData): User!
+        updateLikes(postId: ID!, likesInput: likeData): Post!
         updateUser(id: ID!, userInput: UserInputData): User!
         updatePost(id: ID!, postInput: PostInputData): Post!
         deleteOnePost(id: String!): String!
@@ -92,5 +94,6 @@ export const typeDefs = gql`
         updatePost: Post!
         deletedPost: String!
         followsUpdated: User!
+        likesUpdated: Post!
     }
 `

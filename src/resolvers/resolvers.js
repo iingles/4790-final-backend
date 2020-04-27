@@ -1,6 +1,8 @@
 // NPM packages
 import bcrypt from 'bcryptjs'
 import validator from 'validator'
+// import mongoose from 'mongoose'
+
 // import jwt from 'jsonwebtoken'
 
 // Mongoose models
@@ -15,6 +17,7 @@ const NEW_POST = "NEW POST"
 const UPDATED_POST = "UPDATED POST"
 const DELETED_POST = "DELETED POST"
 const FOLLOWS_UPDATED = "FOLLOWS UPDATED"
+const LIKES_UPDATED = "LIKES UPDATED"
 
 // functions take 3 parameters: parent object, arguements, and context
 
@@ -64,7 +67,7 @@ export const resolvers = {
     },
 
     Mutation: {
-        createUser: async (_, {userInput}, req) => {
+        createUser: async (_, { userInput }, req) => {
             // Validation
 
             // Make a stack of errors
@@ -126,8 +129,8 @@ export const resolvers = {
             }
         },
 
-        updateUser: async (_, {userInput}, req) => {
-        
+        updateUser: async (_, { userInput }, req) => {
+
             if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
@@ -178,7 +181,7 @@ export const resolvers = {
                 error.code = 401
                 throw error
             }
-            
+
             const id = userInput.id
 
             const user = await User.findById(id)
@@ -206,13 +209,15 @@ export const resolvers = {
             }
         },
 
-        updateFollows: async (_, { id, followInput }, { req, pubsub }) => {
+        updateFollows: async (_, inData, { req, pubsub }) => {
 
             if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error
             }
+
+            console.log(inData)
 
             const user = await User.findById(id)
             const user2 = await User.findById(followInput._id)
@@ -243,13 +248,13 @@ export const resolvers = {
                     error.code = 409
                     throw error
                 }
-                
+
                 pubsub.publish(FOLLOWS_UPDATED, {
                     following: user.following
                 })
 
                 return {
-                    
+
                     following: user.following
                 }
             }
@@ -291,26 +296,26 @@ export const resolvers = {
             }
 
             const { accessToken, refreshToken } = createTokens(user)
-           
+
             res.cookie('refreshToken', refreshToken, {
                 expire: 60 * 60 * 24 * 7,
                 httpOnly: true,
                 // secure: true
             })
-           
+
             res.cookie('accessToken', accessToken, {
                 expire: 60 * 15,
                 httpOnly: true,
                 // secure: true
             })
-           
+
             return {
                 userId: user._id,
                 accessToken,
-                refreshToken  
+                refreshToken
             }
         },
-        
+
         createPost: async (_, { postInput }, { pubsub, req }) => {
             // Check userId to see if the user is authenticated
 
@@ -430,6 +435,59 @@ export const resolvers = {
             }
         },
 
+        updateLikes: async (_, { postId, likesInput }, { req, pubsub }) => {
+
+            if (!req.isAuth) {
+                const error = new Error('Not Authenticated')
+                error.code = 401
+                throw error
+            }
+
+            const user = await User.findById(likesInput.userId)
+            // Add in an alert for the post creator later
+            const post = await Post.findById(postId)
+            const action = likesInput.action
+
+            // Handle not found error
+            if (!user || !post) {
+                const error = new Error('Could not find user or post')
+                error.code = 404
+                throw error
+            }
+
+            if (action === 'like') {
+                // Check to see if the post has already been liked by the user
+                if (post.likes.includes(user._id) || user.likes.includes(post._id)) {
+                    const error = new Error('User already liked that post')
+                    error.code = 409 // Conflict
+                    throw error
+                }
+
+                // Add like to both the user and the post
+                user.likes.push(post._id)
+                post.likes.push(user._id)
+            } else {
+                // Remove the like from the user and post
+
+                user.likes.splice(user.likes.indexOf(post._id), 1)
+                post.likes.splice(post.likes.indexOf(user._id), 1)
+            }
+            
+            // If we made it here, save and return the user's likes and the post's likes
+            await user.save()
+            await post.save()
+
+            pubsub.publish(LIKES_UPDATED, {
+                likesUpdated: post
+            })
+
+            return {
+                ...post._doc,
+                ...post.likes,
+                _id: post._id.toString()
+            }
+        },
+
         deleteOnePost: async (_, { id }, { req, pubsub }) => {
 
             if (!req.isAuth) {
@@ -452,10 +510,10 @@ export const resolvers = {
                 throw error
             }
 
-            await Post.findByIdAndRemove(id, { useFindAndModify: false })
+            await Post.findByIdAndRemove(post._id, { useFindAndModify: false })
             // Remove the post from the user's post list
             const user = await User.findById(req.userId)
-            
+
             user.posts.splice(user.posts.indexOf(id), 1)
 
             await user.save()
@@ -464,16 +522,16 @@ export const resolvers = {
             // Whenever we want the subscribe event triggered, call pubsub.publish.  
             // Two parameters for publish: <trigger name>, <payload>
             pubsub.publish(DELETED_POST, {
-                id: id
+                deletedPost: post._id.toString()
             })
 
-            return true
+            return post._id.toString()
         }
     },
 
-    Subscription: {        
+    Subscription: {
         newPost: {
-            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(NEW_POST) 
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(NEW_POST)
         },
         updatePost: {
             subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(UPDATED_POST)
@@ -483,6 +541,9 @@ export const resolvers = {
         },
         followsUpdated: {
             subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(FOLLOWS_UPDATED)
+        },
+        likesUpdated: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator(LIKES_UPDATED)
         }
     }
 }
