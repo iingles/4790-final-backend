@@ -209,15 +209,13 @@ export const resolvers = {
             }
         },
 
-        updateFollows: async (_, inData, { req, pubsub }) => {
+        updateFollows: async (_, { id, followInput }, { req, pubsub }) => {
 
             if (!req.isAuth) {
                 const error = new Error('Not Authenticated')
                 error.code = 401
                 throw error
             }
-
-            console.log(inData)
 
             const user = await User.findById(id)
             const user2 = await User.findById(followInput._id)
