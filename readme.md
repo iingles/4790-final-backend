@@ -30,7 +30,7 @@ and
     - [x] See my [Github Profile](https://github.com/iingles)
 
 
-[My Twitter Clone Prototype REST API](http://206.189.215.72/)
+[My Twitter Clone Prototype REST API](http://206.189.215.72:8080/)
 1. Present a User Interface route or "page" that allows the user to:
 
     1. CREATE a meaningful (at least 5 data fields) resource through a REST endpoint that is stored in the datastore
