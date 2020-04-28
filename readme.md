@@ -10,7 +10,13 @@
 # Isaac's Twitter Clone
 #### Final Project for DGM 4790, Spring 2020
 
-[My Twitter Clone](http://206.189.215.72/) is hosted live on DigitalOcean.
+[My Twitter Clone GraphQL](http://206.189.215.72/) 
+
+and
+
+[My Twitter Clone Prototype REST API](http://206.189.215.72/)
+
+Are both hosted live on DigitalOcean.
 ---
 
 ## Project Requirements
@@ -32,23 +38,7 @@
     - [x] See my [Github Profile](https://github.com/iingles)
 
 1. Present a User Interface route or "page" that allows the user to:
-     **The original mono-repo for my REST project is** [here](https://github.com/iingles/node-social)
-     
-     - Please note that in trying to set up my REST server all in one on Digital Ocean, I nuked everything on Digital Ocean as well as Heroku (this was on 4-26) and spent until 5 AM on 4-27 figuring out how to rebuild it all so if you get to this before the end of 4-27, I'm still trying to get my REST stuff up and functional.  However, if I don't make it in time, you can go to the repository above and it should still be configured to work from localhost (except the .env config for the database/authentication tokens will be missing)
-
-    So, just in case I don't make it, you can install the full stack REST app by cloning [the repository](https://github.com/iingles/node-social):
-
-    `git clone git@github.com:iingles/node-social.git`
-
-    Install the dependencies:
-
-    `cd backend && npm install`
-    `cd frontend && npm install`
-
-    then run both the backend and frontend:
-
-    `cd backend && npm run dev`
-    `cd frontend && npm run serve`
+     **The original mono-repo for my REST project is** [here](https://github.com/iingles/node-social)     
 
     - Here are the relevant parts of the REST backend:
     [REST controllers](https://github.com/iingles/node-social/tree/master/backend/controllers)
