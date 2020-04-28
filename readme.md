@@ -7,7 +7,8 @@ and
 
 [My Twitter Clone Prototype REST API](http://206.189.215.72/)
 
-Are both hosted live on DigitalOcean.
+#### Are both hosted live on DigitalOcean.
+
 ---
 
 ## Project Requirements
@@ -28,16 +29,9 @@ Are both hosted live on DigitalOcean.
 1. Properly use Git for your source version control with an established record of at least 4 days of commits each week from February 19th through April 27th.
     - [x] See my [Github Profile](https://github.com/iingles)
 
+
+[My Twitter Clone Prototype REST API](http://206.189.215.72/)
 1. Present a User Interface route or "page" that allows the user to:
-     **The original mono-repo for my REST project is** [here](https://github.com/iingles/node-social)     
-
-    - Here are the relevant parts of the REST backend:
-    [REST controllers](https://github.com/iingles/node-social/tree/master/backend/controllers)
-    [REST routes](https://github.com/iingles/node-social/tree/master/backend/routes)
-
-    - Here's where most of the action happens on the REST front end:
-    [Feed view](https://github.com/iingles/node-social/blob/master/frontend/src/views/Feed.vue)
-    [Profile view](https://github.com/iingles/node-social/blob/master/frontend/src/views/Profile.vue)
 
     1. CREATE a meaningful (at least 5 data fields) resource through a REST endpoint that is stored in the datastore
         - [x] You can sign up a user with email, firstname, lastname, and password 
@@ -55,6 +49,8 @@ Are both hosted live on DigitalOcean.
     1. DELETE some resource via the proper endpoint
         - [x] Posts may be deleted 
 
+
+[My Twitter Clone GraphQL](http://206.189.215.72/)
 1. Present a separate User Interface route or "page" that allows the user to:
     1. CREATE a meaningful (at least 5 data fields) resource through a GraphQL endpoint that is stored in the datastore
         - [x] A user may be signed up on the [/signup](http://206.189.215.72/signup) page.
@@ -90,6 +86,16 @@ Are both hosted live on DigitalOcean.
     - [x] The backend GraphQL playground may be reached [here](http://206.189.215.72:4000/graphql), although the app requires authentication so you won't (or at least shouldn't) be able to do much.
     - [x] GraphQL resolvers for CRUD operations are [here](https://github.com/iingles/4790-final-backend/blob/master/src/resolvers/resolvers.js)
     - [x] GraphQL Schema is [here](https://github.com/iingles/4790-final-backend/blob/master/src/schema/schema.js)
+
+    **The original mono-repo for my REST project is** [here](https://github.com/iingles/node-social)     
+
+    - Here are the relevant parts of the REST backend:
+    [REST controllers](https://github.com/iingles/node-social/tree/master/backend/controllers)
+    [REST routes](https://github.com/iingles/node-social/tree/master/backend/routes)
+
+    - Here's where most of the action happens on the REST front end:
+    [Feed view](https://github.com/iingles/node-social/blob/master/frontend/src/views/Feed.vue)
+    [Profile view](https://github.com/iingles/node-social/blob/master/frontend/src/views/Profile.vue)
 
         
  
