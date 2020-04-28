@@ -5,7 +5,7 @@
 
 and
 
-[My Twitter Clone Prototype REST API](http://206.189.215.72/)
+[My Twitter Clone Prototype REST API](http://206.189.215.72:8080/)
 
 #### Are both hosted live on DigitalOcean.
 
