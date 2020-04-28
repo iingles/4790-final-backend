@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 # Isaac's Twitter Clone
 #### Final Project for DGM 4790, Spring 2020
 
