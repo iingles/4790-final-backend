@@ -31,11 +31,48 @@
 1. Properly use Git for your source version control with an established record of at least 4 days of commits each week from February 19th through April 27th.
     - [x] See my [Github Profile](https://github.com/iingles)
 
-1. Present a User Interface route or "page" that allows the user to: 
+1. Present a User Interface route or "page" that allows the user to:
+     **The original mono-repo for my REST project is** [here](https://github.com/iingles/node-social)
+     
+     - Please note that in trying to set up my REST server all in one on Digital Ocean, I nuked everything on Digital Ocean as well as Heroku (this was on 4-26) and spent until 5 AM on 4-27 figuring out how to rebuild it all so if you get to this before the end of 4-27, I'm still trying to get my REST stuff up and functional.  However, if I don't make it in time, you can go to the repository above and it should still be configured to work from localhost (except the .env config for the database/authentication tokens will be missing)
+
+    So, just in case I don't make it, you can install the full stack REST app by cloning [the repository](https://github.com/iingles/node-social):
+
+    `git clone git@github.com:iingles/node-social.git`
+
+    Install the dependencies:
+
+    `cd backend && npm install`
+    `cd frontend && npm install`
+
+    then run both the backend and frontend:
+
+    `cd backend && npm run dev`
+    `cd frontend && npm run serve`
+
+    - Here are the relevant parts of the REST backend:
+    [REST controllers](https://github.com/iingles/node-social/tree/master/backend/controllers)
+    [REST routes](https://github.com/iingles/node-social/tree/master/backend/routes)
+
+    - Here's where most of the action happens on the REST front end:
+    [Feed view](https://github.com/iingles/node-social/blob/master/frontend/src/views/Feed.vue)
+    [Profile view](https://github.com/iingles/node-social/blob/master/frontend/src/views/Profile.vue)
+
     1. CREATE a meaningful (at least 5 data fields) resource through a REST endpoint that is stored in the datastore
+        - [x] You can sign up a user with email, firstname, lastname, and password 
+        - [x] You can create new posts
+
     1. Read or GET meaningful data from 3 different REST endpoints
+        - [x] Posts are fetched on the loading of the main feed screen as well as the profile screen
+        - [x] User data is fetched along with the posts
+        - [x] User data is fetched on the profile page
+        - [x] User data is fetched on login
+
     1. UPDATE at least 1 portion of meaningful data through the appropriate endpoint
+        - [x] Posts may be updated
+
     1. DELETE some resource via the proper endpoint
+        - [x] Posts may be deleted 
 
 1. Present a separate User Interface route or "page" that allows the user to:
     1. CREATE a meaningful (at least 5 data fields) resource through a GraphQL endpoint that is stored in the datastore
